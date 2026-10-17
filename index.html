@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para Fátima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --sky-top:#0e3a3f; --sky-bot:#2f7d6d; --glow:#9fe3c8;
+  --paper:#fbf3e4; --paper-dark:#efe0c6; --ink:#5a2a33; --seal:#c3213b;
+  --soil:#3b2619; --soil-top:#58392a; --grass:#3f9a56; --cream:#fff7e8;
+  --script:'Dancing Script','Segoe Script','Brush Script MT',cursive;
+  --sans:'Quicksand',system-ui,-apple-system,'Segoe UI',sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{
+  margin:0;height:100%;overflow:hidden;font-family:var(--sans);color:var(--cream);
+  background:radial-gradient(ellipse at 50% 70%,var(--glow) -20%,transparent 60%),
+             linear-gradient(180deg,var(--sky-top),var(--sky-bot));
+  -webkit-tap-highlight-color:transparent;
+}
+.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px)}
+
+/* ---------- Carta ---------- */
+#intro{flex-direction:column;gap:22px;transition:opacity .7s ease,transform .7s ease;perspective:900px;z-index:5}
+#intro.gone{opacity:0;transform:scale(1.15) translateY(-30px);pointer-events:none}
+.env{
+  position:relative;width:min(84vw,330px);aspect-ratio:3/2;border:0;padding:0;cursor:pointer;
+  background:linear-gradient(160deg,var(--paper),var(--paper-dark));border-radius:10px;
+  box-shadow:0 18px 40px rgba(0,0,0,.35);font:inherit;color:var(--ink);
+  animation:float 4s ease-in-out infinite;
+}
+.env:focus-visible{outline:3px solid var(--cream);outline-offset:6px}
+.env .flap{
+  position:absolute;left:0;top:0;width:100%;height:58%;border-radius:10px 10px 0 0;
+  background:linear-gradient(180deg,#f0dfc2,#e6d2b0);
+  clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;
+  transition:transform .7s ease,opacity .3s ease .45s;
+}
+.env .seal{
+  position:absolute;left:50%;top:58%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#e8465d,var(--seal) 60%,#8f1428);
+  color:#ffe3e8;display:grid;place-items:center;font-size:20px;
+  box-shadow:0 3px 8px rgba(0,0,0,.35);transition:opacity .3s;
+}
+.env .to{
+  position:absolute;left:0;right:0;bottom:11%;text-align:center;font-family:var(--script);
+  font-weight:700;line-height:1.1;padding:0 12px;
+}
+.env .to b{display:block;font-size:clamp(1.35rem,6.4vw,1.8rem);font-weight:700}
+.env .to span{display:block;font-size:clamp(1.05rem,5vw,1.35rem);font-weight:600;margin-top:2px}
+.env.open{animation:none}
+.env.open .flap{transform:rotateX(180deg);opacity:0}
+.env.open .seal{opacity:0}
+.hint{font-size:.95rem;letter-spacing:.02em;opacity:.85;animation:pulse 2.4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px) rotate(-.6deg)}}
+@keyframes pulse{50%{opacity:.4}}
+
+/* ---------- Jardín ---------- */
+#garden{pointer-events:none;align-items:flex-end;justify-content:center}
+#garden.on{pointer-events:auto}
+.thanks{
+  position:absolute;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 7dvh);text-align:center;
+  font-family:var(--script);font-weight:700;font-size:clamp(2.1rem,10.5vw,3.4rem);line-height:1.15;
+  padding:0 20px;opacity:0;transform:translateY(14px);text-shadow:0 3px 18px rgba(0,0,0,.35);z-index:7;
+}
+#garden.on .thanks{animation:in 1.4s ease 3.2s forwards}
+@keyframes in{to{opacity:1;transform:none}}
+.ground{
+  position:absolute;left:-5%;right:-5%;bottom:0;height:calc(15dvh + env(safe-area-inset-bottom,0px));z-index:4;
+  background:linear-gradient(180deg,var(--soil-top),var(--soil));border-radius:55% 55% 0 0/26px 26px 0 0;
+}
+.grass{position:absolute;left:0;bottom:calc(15dvh + env(safe-area-inset-bottom,0px) - 6px);width:100%;height:46px;z-index:6}
+.row{position:absolute;bottom:calc(15dvh + env(safe-area-inset-bottom,0px) - 4px);left:0;right:0;
+  display:flex;align-items:flex-end;justify-content:center;z-index:3}
+.fl{display:block;height:auto;overflow:visible;transform-origin:50% 100%}
+#white{width:min(50vw,230px,23dvh);margin-right:-4vw}
+#red{width:min(58vw,262px,26dvh);margin-left:-4vw}
+#garden.on .fl{animation:sway 5s ease-in-out 4.2s infinite alternate}
+#garden.on #red{animation-delay:4.8s}
+@keyframes sway{from{transform:rotate(-1.4deg)}to{transform:rotate(1.4deg)}}
+
+.stem{fill:none;stroke:#3d9a55;stroke-width:6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.leaf{fill:#46a95e;transform:scale(0);}
+.rise{transform:translateY(350px)}
+.bloom{transform:scale(0) rotate(-50deg);transform-origin:100px 110px}
+#garden.on .stem{animation:draw 2.8s cubic-bezier(.3,.6,.3,1) .5s forwards}
+#garden.on #red .stem{animation-delay:1s}
+#garden.on .rise{animation:up 2.8s cubic-bezier(.3,.6,.3,1) .5s forwards}
+#garden.on #red .rise{animation-delay:1s}
+#garden.on .leaf{animation:pop 1s cubic-bezier(.3,1.5,.5,1) 1.6s forwards}
+#garden.on .leaf.l2{animation-delay:2s}
+#garden.on #red .leaf{animation-delay:2.1s}
+#garden.on #red .leaf.l2{animation-delay:2.5s}
+#garden.on .bloom{animation:open 1.6s cubic-bezier(.2,1.3,.4,1) 3s forwards}
+#garden.on #red .bloom{animation-delay:3.5s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes up{to{transform:none}}
+@keyframes pop{to{transform:scale(1)}}
+@keyframes open{to{transform:none}}
+
+.replay{
+  position:absolute;right:16px;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:8;border:1px solid rgba(255,247,232,.5);
+  background:rgba(255,247,232,.12);color:var(--cream);font:inherit;font-size:.9rem;padding:8px 14px;border-radius:999px;
+  cursor:pointer;opacity:0;pointer-events:none;transition:opacity .8s ease;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.replay.show{opacity:1;pointer-events:auto}
+.replay:focus-visible{outline:3px solid var(--cream);outline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){
+  .env,.hint{animation:none}
+  #garden.on .fl{animation:none}
+}
+</style>
+</head>
+<body>
+
+<main class="screen" id="intro">
+  <button class="env" id="env" aria-label="Abrir la carta para Fátima">
+    <span class="flap"></span>
+    <span class="seal" aria-hidden="true">♥</span>
+    <span class="to"><b>Para mi mejor amiga Fátima</b><span>con mucho cariño</span></span>
+  </button>
+  <p class="hint">Toca la carta</p>
+</main>
+
+<section class="screen" id="garden" aria-live="polite">
+  <button class="replay" id="replay">Volver a ver</button>
+  <h1 class="thanks">Gracias por tu linda amistad</h1>
+  <div class="row" id="row"></div>
+  <svg class="grass" id="grass" viewBox="0 0 400 46" preserveAspectRatio="none" aria-hidden="true"></svg>
+  <div class="ground"></div>
+</section>
+
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+
+  function el(tag,attrs,parent){
+    var e=document.createElementNS(NS,tag);
+    for(var k in attrs){e.setAttribute(k,attrs[k]);}
+    if(parent){parent.appendChild(e);}
+    return e;
+  }
+
+  /* Gerbera: cabeza de pétalos en dos capas, centro con puntitos */
+  function gerbera(id,c){
+    var svg=el('svg',{id:id,class:'fl',viewBox:'0 0 200 470','aria-hidden':'true'});
+    var defs=el('defs',{},svg);
+    var g=el('radialGradient',{id:id+'-p',cx:'50%',cy:'100%',r:'100%'},defs);
+    el('stop',{offset:'0','stop-color':c.petalIn},g);
+    el('stop',{offset:'1','stop-color':c.petalOut},g);
+
+    el('path',{class:'stem',pathLength:'1',d:'M100 470 C 95 390 106 260 100 140'},svg);
+    el('path',{class:'leaf l1',d:'M100 410 C 58 402 30 372 22 330 C 62 338 94 368 100 410Z',style:'transform-origin:100px 410px'},svg);
+    el('path',{class:'leaf l2',d:'M100 372 C 142 362 170 332 178 290 C 138 298 106 328 100 372Z',style:'transform-origin:100px 372px'},svg);
+
+    var rise=el('g',{class:'rise'},svg);
+    var bloom=el('g',{class:'bloom'},rise);
+    var head=el('g',{transform:'translate(100 110)'},bloom);
+
+    var i,p;
+    for(i=0;i<20;i++){
+      el('ellipse',{cx:0,cy:-58,rx:11.5,ry:42,fill:'url(#'+id+'-p)',stroke:c.edge,'stroke-width':.8,
+        transform:'rotate('+(i*18)+')'},head);
+    }
+    for(i=0;i<20;i++){
+      el('ellipse',{cx:0,cy:-44,rx:10,ry:32,fill:'url(#'+id+'-p)',stroke:c.edge,'stroke-width':.8,opacity:.96,
+        transform:'rotate('+(i*18+9)+')'},head);
+    }
+    el('circle',{r:24,fill:c.ring},head);
+    el('circle',{r:17,fill:c.core},head);
+    for(i=0;i<16;i++){
+      var a=i*Math.PI*2/16,r=10;
+      el('circle',{cx:(Math.cos(a)*r).toFixed(1),cy:(Math.sin(a)*r).toFixed(1),r:2.2,fill:c.dot},head);
+    }
+    for(i=0;i<5;i++){
+      var b=i*Math.PI*2/5+.4;
+      el('circle',{cx:(Math.cos(b)*4).toFixed(1),cy:(Math.sin(b)*4).toFixed(1),r:1.8,fill:c.dot},head);
+    }
+    return svg;
+  }
+
+  var row=document.getElementById('row');
+  row.appendChild(gerbera('white',{petalIn:'#ffffff',petalOut:'#f1ebe3',edge:'#d9cfc2',ring:'#c9b45a',core:'#6b5a1e',dot:'#e9d27a'}));
+  row.appendChild(gerbera('red',{petalIn:'#f0475c',petalOut:'#b3122b',edge:'#8e0d20',ring:'#2a1210',core:'#150a09',dot:'#6b3a2a'}));
+
+  /* Pasto */
+  var grass=document.getElementById('grass'),d='M0 46',x;
+  for(x=0;x<=400;x+=8){
+    var h=14+((x*37)%23);
+    d+=' L'+x+' 46 Q'+(x+2)+' '+(46-h*0.6)+' '+(x+4+((x*13)%5)-2)+' '+(46-h);
+    d+=' Q'+(x+5)+' '+(46-h*0.5)+' '+(x+8)+' 46';
+  }
+  d+=' L400 46Z';
+  el('path',{d:d,fill:'#3f9a56'},grass);
+
+  /* Interacción */
+  var env=document.getElementById('env'),
+      intro=document.getElementById('intro'),
+      garden=document.getElementById('garden'),
+      replay=document.getElementById('replay'),
+      timers=[];
+
+  function later(fn,ms){timers.push(setTimeout(fn,ms));}
+
+  function start(){
+    if(env.classList.contains('open')){return;}
+    env.classList.add('open');
+    later(function(){intro.classList.add('gone');garden.classList.add('on');},900);
+    later(function(){replay.classList.add('show');},7800);
+  }
+
+  function reset(){
+    timers.forEach(clearTimeout);timers=[];
+    replay.classList.remove('show');
+    garden.classList.remove('on');
+    intro.classList.remove('gone');
+    env.classList.remove('open');
+    env.style.animation='none';
+    void env.offsetWidth;
+    env.style.animation='';
+  }
+
+  env.addEventListener('click',start);
+  replay.addEventListener('click',reset);
+})();
+</script>
+</body>
+</html>
